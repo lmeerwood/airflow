@@ -358,14 +358,14 @@ class OracleHook(DbApiHook):
             row_count += 1
             if row_count % commit_every == 0:
                 cursor.prepare(prepared_stm)
-                cursor.executemany(None, row_chunk)
+                cursor.executemany(row_chunk)
                 conn.commit()  # type: ignore[attr-defined]
                 self.log.info("[%s] inserted %s rows", table, row_count)
                 # Empty chunk
                 row_chunk = []
         # Commit the leftover chunk
         cursor.prepare(prepared_stm)
-        cursor.executemany(None, row_chunk)
+        cursor.executemany(row_chunk)
         conn.commit()  # type: ignore[attr-defined]
         self.log.info("[%s] inserted %s rows", table, row_count)
         cursor.close()
