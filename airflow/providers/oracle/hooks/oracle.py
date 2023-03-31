@@ -357,6 +357,7 @@ class OracleHook(DbApiHook):
             row_chunk.append(row)
             row_count += 1
             if row_count % commit_every == 0:
+                self.log.info("LENNY'S TEST!")
                 cursor.prepare(prepared_stm)
                 cursor.executemany(row_chunk)
                 conn.commit()  # type: ignore[attr-defined]
